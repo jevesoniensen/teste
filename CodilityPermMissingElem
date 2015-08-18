@@ -1,0 +1,16 @@
+    public static int solution(int[] A) {
+    	int slenght = 0; 
+    	int sValue = 0;
+    	
+    	int i = 0;
+    	for (i = 0; i < A.length; i++) {
+			slenght += i+1;
+			sValue += A[i];
+		}    	
+    	slenght += i+1;
+    	
+    	System.out.println("slenght "+slenght);
+    	System.out.println("sValue "+sValue);
+    	
+    	return slenght-sValue;
+    }
