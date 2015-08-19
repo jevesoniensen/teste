@@ -1,0 +1,29 @@
+    public static int solutionMinAbs(int[] A) {
+    	
+    	int min=Math.abs(A[0]);
+    	int s1=Math.abs(A[0]);
+    	int i=1;
+    	int countIter = 0;
+    	int numIter = A.length;
+    	while ((countIter<numIter && i<A.length)) {
+    		
+    		if(i==(A.length-1)){
+    			countIter++;
+    			s1=0;
+    			i=countIter;    			
+    		}
+    		
+    		System.out.print("("+countIter+","+i+") ");
+    		
+			s1 = s1 +A[i++];
+			
+			System.out.println("Math.abs(s1)="+Math.abs(s1));
+			
+			if(Math.abs(s1)<min){
+				min = Math.abs(s1);
+			}
+			
+		}
+    	
+    	return min;
+    }
