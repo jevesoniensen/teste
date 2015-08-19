@@ -1,0 +1,29 @@
+	public static int solutionXXX(int[] A,int[] B) {
+		int fato = 1000000;
+		
+		int i = 1; 
+		int countIter = 0;
+    	int numIter = A.length;
+    	double sumAuxA = 0;
+    	double sumAuxB = 0;
+    	int count = 0;
+		while ((countIter<numIter && i<A.length)) {
+			
+    		sumAuxA = (A[countIter]+((double)B[countIter]/fato));
+    		sumAuxB = ((A[i])+((double)(B[i])/fato));
+    		if((sumAuxA * sumAuxB) >= (sumAuxA + sumAuxB)){
+    			System.out.print("("+countIter+","+i+") = ");
+    			System.out.println("("+sumAuxA + "*" + sumAuxB + ")=" + (sumAuxA * sumAuxB) + " >= ("+sumAuxA + "+" + sumAuxB + ")=" + (sumAuxA + sumAuxB));    			
+    			count++;
+    		}
+
+    		if(i>=(A.length-1)){
+    			i=countIter+1;
+    			countIter++;    			    			
+    		}
+			
+    		i++;
+
+		}
+		return count;
+	}
