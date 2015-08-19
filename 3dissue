@@ -1,6 +1,10 @@
     public static int solutionMinAbs(int[] A) {
     	
-    	int min=Math.abs(A[0]);
+    	if(A.length == 1){
+    		return A[0];
+    	}
+    	
+    	int min=Math.abs((A[0]+A[1]));
     	int s1=Math.abs(A[0]);
     	int i=1;
     	int countIter = 0;
