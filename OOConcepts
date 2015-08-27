@@ -1,0 +1,7 @@
+Inheritance: It is a way to define common behaviors/attributes to different objects. It’s very good tool improve the code reusability and matainability.
+Abstraction: It is a not instantiable class that defines  common attributes and methods. Methods can have implementation
+Interface: It is a way to define common constants and functionalities. A classe that implements an interface must override it methods.
+Polymorphism: It is a way to define a unique behavior for one common functionality. Ex: Object “Car method engine()” a Camaro has one implementation of engine and a Golf has other.
+Encapsulation: It’s a way to control what attributes/method can be overrided/accessed from other class.
+Override: It consists in implement a method defined in one interface or abstract class. However Override can be the act of re-implement a super class method.
+Overload: It the capacity of have the same method signature with different parameter.
