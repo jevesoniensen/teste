@@ -10,9 +10,12 @@
 	    for (int i = 0; i < A.length; i++) {
 	    	if(A[i]==1){
 	    		y+=x;
+	    		if(y>1000000000){
+		    		return -1;
+		    	}
 	    	}else{
 	    		x++;
-	    	}
+	    	}	    	     	    	
 		}
-	    return y > 100000000?-1:y;
+	    return y;
 	}
