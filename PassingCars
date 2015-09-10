@@ -1,0 +1,18 @@
+	public static void main(String[] args){
+		System.out.println(solution(new int[]{0,1,0,1,1}));
+		System.out.println("-");
+		System.out.println(solution(new int[]{0,0,0,1,1}));
+	}
+	
+	public static int solution(int[] A) {
+	    int y = 0;
+	    int x = 0;
+	    for (int i = 0; i < A.length; i++) {
+	    	if(A[i]==1){
+	    		y+=x;
+	    	}else{
+	    		x++;
+	    	}
+		}
+	    return y > 100000000?-1:y;
+	}
