@@ -3,11 +3,6 @@
 	}
 	
     public static int solution(int A, int B, int K) {
-    	int counter = 0;
-        for (int i = A; i <= B; i++) {
-			if((i%K)==0){
-				counter++;
-			}
-		}
-        return counter;
+    	int offSet = A%K==0?1:0;
+    	return (B/K)-(A/K) + offSet;
     }
