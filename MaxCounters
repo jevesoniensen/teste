@@ -1,0 +1,40 @@
+    public static int[] solution(int N, int[] A) {
+    	int[] counters = new int[N];
+     	
+    	int curMax = 0;
+    	int max = 0;
+    	int pos = 0;
+    	for (int i = 0; i < A.length; i++) {
+    		if(A[i] < (N+1)){
+				pos = A[i]-1;
+				if(counters[pos] < max){
+					counters[pos] = max;
+				}	
+				counters[pos]++;
+				
+				if(curMax < counters[pos]){
+					curMax = counters[pos];
+				}
+			}else{
+				max = curMax;
+			}
+    		printCounters(counters);
+		}
+
+		for (int j = 0; j < counters.length; j++) {
+			if(counters[j] < max){
+				counters[j] = max;
+			}
+		}
+		
+		printCounters(counters);
+    	
+    	return counters;
+    }   
+    
+    public static void printCounters(int[] counters){
+		for (int j = 0; j < counters.length; j++) {
+			System.out.print(counters[j] + ",");
+		}
+		System.out.println();
+    }
