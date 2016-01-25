@@ -1,0 +1,278 @@
+<html lang="en" >
+<head>
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="./script/angular-material.min.css">
+
+    <link rel="stylesheet" href="./script/material.indigo-pink.min.css">
+    <!-- Material Design icon font -->
+    <link rel="stylesheet" href="./script/icon.css">
+
+  <style type="text/css">
+    md-sidenav  {
+      width: 110px;height:100%;
+      padding:20px;
+      background-color: #6bc7cc;
+    }
+
+    md-content {
+      background-color : white;
+      height:100%;
+      padding:20px;
+    }
+
+    .selectdemoBasicUsage md-input-container {
+  	margin-right: 10px; }
+  </style>
+
+</head>
+<body ng-app="MyApp" layout="row" ng-cloak>
+
+  <md-content flex layout="column" ng-controller="AppCtrl">
+    <ng-view>
+		<div class="md-padding" ng-cloak>
+		  <div>
+		  	<form id="enviar">
+		    <h1 class="md-title">Simulador</h1>
+		    <div layout="row">    
+		      <md-input-container>
+		        <label>Tipo Comprovante</label>
+		        <md-select ng-model="tipoComprovante" ng-init="tipoComprovante='3'">
+		          <md-option ng-repeat="tc in tiposComprovantes" value="{{tc.id}}">{{tc.nome}}</md-option>
+		        </md-select>
+		      </md-input-container>		    
+		      <md-input-container>
+		        <label>Login</label>		        
+		        <input type="text" ng-model="filtro.login" ng-init="filtro.login='jeveson.master1'" >
+		      </md-input-container>
+		      <md-input-container>
+		        <label>CPF/CNPJ</label>
+		        <input type="text" ng-model="filtro.cnpj" ng-init="filtro.cnpj='02798903971'">
+		      </md-input-container>
+		    </div>
+			<div layout="row">		      
+		      <md-input-container>
+		        <label>Conta Corrente</label>
+		        <input type="text" ng-model="filtro.contaCorrente" ng-init="filtro.contaCorrente='19964148138'">
+		      </md-input-container>		      
+		       <md-input-container>
+		        <label>Data Inicial</label>
+		        <input type="text" ng-model="filtro.dataInicial" ng-init="filtro.dataInicial='01/03/2015'">
+		      </md-input-container>	      
+		       <md-input-container>
+		        <label>Data Final</label>
+		        <input type="text" ng-model="filtro.dataFinal" ng-init="filtro.dataFinal='30/03/2015'">
+		      </md-input-container>		      
+		      <!--
+		      <md-content>
+		        <md-datepicker name="dataIni" md-placeholder="Data Inicial" ng-model="dataInicial" ></md-datepicker>
+		        <md-datepicker name="dataFim" md-placeholder="Data Final" ng-model="dtFinal" ></md-datepicker>
+		      </md-content>
+		      -->
+		    </div>
+		    <div layout="row">		      
+				<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+			        <md-button class="md-raised md-primary" ng-click="enviar()">Enviar</md-button>			    
+    		  	</section>		      
+		    </div>
+		    </form>
+		    <div layout="row">	 
+		    	<!--
+
+		    	<md-list ng-cloak>
+  					<md-subheader class="md-no-sticky">Pagamentos Realizados</md-subheader>
+ 					 <md-list-item ng-repeat="pgtos in pagamentos.pgtos">
+    						<p> {{ pgtos.valor }} </p>
+    				<md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+    			
+  				</md-list-item>
+  					-->
+				<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+					<thead>
+					    <tr>
+					      <th class="mdl-data-table__cell--non-numeric">Valor</th>
+					      <th class="mdl-data-table__cell--non-numeric">Numero do documento</th>
+				      	  <th class="mdl-data-table__cell--non-numeric">Data emissão</th>
+					      <th class="mdl-data-table__cell--non-numeric">Hora emissão</th>					      
+					    </tr>
+					</thead>				
+				  	<tbody>				    	
+				    	<tr ng:repeat="pgtos in pagamentos.pgtos">
+				       		<td  class="mdl-data-table__cell--non-numeric" ng-click="print(pgtos.key)" >{{pgtos.valor}}</td>				       
+				       		<td  class="mdl-data-table__cell--non-numeric" ng-click="print(pgtos.key)" >{{pgtos.numeroDocumento}}</td>
+				       		<td  class="mdl-data-table__cell--non-numeric" ng-click="print(pgtos.key)" >{{pgtos.dataEmissao}}</td>				       
+				       		<td  class="mdl-data-table__cell--non-numeric" ng-click="print(pgtos.key)" >{{pgtos.horaEmissao}}</td>				       		
+				       	</tr>
+				  	</tbody>
+				</table>
+		    </div>
+		  </div>
+		</div>
+    </ng-view>
+  </md-content>
+  <!--
+    Your HTML content here
+  -->  
+  
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="./script/angular.min.js"></script>
+  <script src="./script/angular-animate.min.js"></script>
+  <script src="./script/angular-aria.min.js"></script>
+  <script src="./script/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="./script/angular-material.min.js"></script>
+  
+  <!-- Your application bootstrap  -->
+  <script type="text/javascript">    
+	var popupWin = null;
+    var myApp = angular.module('MyApp', ['ngMaterial']);
+
+    myApp.config(function($httpProvider) {
+  		$httpProvider.defaults.useXDomain = true;
+  		delete $httpProvider.defaults.headers.common['X-Requested-With'];
+	});
+
+	myApp.controller('AppCtrl', ['$scope', '$http', function($scope,$http) {
+	   
+	   		
+	        $scope.tiposComprovantes = [
+				{ id: 8, 	nome: 'Transferências' },
+				{ id: 310, 	nome: 'Pagamentos de FGTS' },
+				{ id: 12, 	nome: 'Pagamentos de Boletos' },
+				{ id: 13, 	nome: 'Pagamento de Serviços Públicos' },
+				{ id: 44, 	nome: 'Pagamento de Tributos Estaduais' },
+				{ id: 24, 	nome: 'Licenciamento/Outros Serviços DETRAN' },
+				{ id: 23, 	nome: 'IPVA/DPVAT' },
+				{ id: 43, 	nome: 'GARE - SP s/barras' },
+				{ id: 51, 	nome: 'IPTU' },
+				{ id: 52, 	nome: 'ISS' },
+				{ id: 14, 	nome: 'DARF sem código de barras' },
+				{ id: 304, 	nome: 'DARF com código de barras' },
+				{ id: 305, 	nome: 'Pagamento de Simples Nacional' },
+				{ id: 15, 	nome: 'Pagamento de GPS' },
+				{ id: 27, 	nome: 'Pagamento de Boletos em Cartório' },
+				{ id: 18, 	nome: 'Salários' },
+				{ id: 16, 	nome: 'Transferências para Outro Banco' },
+				{ id: 17, 	nome: 'Depósito TVD' },
+				{ id: 22, 	nome: 'Boletos DDA' },
+				{ id: 25, 	nome: 'Outros Pagamentos com Código de Barras' },
+				{ id: 26, 	nome: 'Serviço e Taxas Detran' },
+				{ id: 3, 	nome: 'Tributos / taxas com Código de Barras' }
+		  	];	
+  			//$scope.tipoComprovante = { id: 8, 	nome: 'Transferências' };
+
+			$scope.print = function(key){
+				$http({	method: "POST", 
+						url: "http://localhost:9080/OFB-PAGAMENTOS/servlets/ConsultaAgendaPaginacaoServlet2?ServletState=60",
+						params: {json : JSON.stringify(key)}
+					  }).
+			        then(function(response) {
+			          $scope.status = response.status;
+			          $scope.comprovante = response.data;
+			          console.log($scope.comprovante);
+			          	popupWin = window.open('', '_blank', 'width=700,height=700');
+			            /*popupWin = window.open('', '_blank', 'width=700,height=700');
+            			popupWin.document.open();
+            			popupWin.document.write("data:application/pdf;base64, "+decode_base64($scope.comprovante.comprovante)); 
+            			*/
+						var stream = $scope.comprovante.comprovante;
+            			if($scope.comprovante.contentType == "application/PDF"){
+            				popupWin.location = "data:application/pdf;base64,"+stream;
+            			}else{
+            				popupWin.document.open();
+            				popupWin.document.write(decode_base64(stream)); 
+            			}            			
+			        }, function(response) {
+			          $scope.data = response.data || "Request failed";
+			          $scope.status = response.status;
+	  	      	}); 
+			};
+
+  			$scope.enviar = function(){
+
+  				console.log($scope.filtro);
+  				if($scope.filtro == undefined){
+  					$scope.filtro = {};
+  				}
+
+			    $scope.filtro.serviceCode="lista";
+
+			    if($scope.tipoComprovante != undefined){
+			    	$scope.filtro.tipoComprovante = $scope.tipoComprovante;
+			    	console.log($scope.tipoComprovante);
+			    	console.log($scope.filtro.tipoComprovante);
+			    }
+
+			    /*console.log("Data Inicial ---->" +$scope.dataInicial);
+			    if($scope.dataInicial != undefined){
+
+					var strData = (("0"+$scope.dataInicial.getDate()).slice(-2))+'/'+
+								  (("0" + ($scope.dataInicial.getMonth() + 1)).slice(-2))+'/'+$scope.dataInicial.getFullYear();
+
+			        console.log("Data Inicial : " + strData);
+					$scope.filtro.dataInicial = strData;
+  				}
+
+  				if($scope.dtFinal != undefined){
+
+					var strData2 = (("0"+$scope.dtFinal.getDate()).slice(-2))+'/'+
+								  (("0" + ($scope.dtFinal.getMonth() + 1)).slice(-2))+'/'+$scope.dtFinal.getFullYear();
+
+					console.log($scope.dtFinal + " Data Final : " + strData2);
+			   		$scope.filtro.dataFinal = strData2;
+			   	}*/
+
+				$http({	method: "POST", 
+						url: "http://localhost:9080/OFB-PAGAMENTOS/servlets/ConsultaAgendaPaginacaoServlet2?ServletState=30",
+						params: {json : JSON.stringify($scope.filtro)}
+					  }).
+			        then(function(response) {
+			          $scope.status = response.status;
+			          $scope.pagamentos = response.data;
+			          console.log($scope.pagamentos);
+			        }, function(response) {
+			          $scope.data = response.data || "Request failed";
+			          $scope.status = response.status;
+	  	      	}); 
+			    //$scope.filtro = {};    
+			};	
+
+			function decode_base64 (s)
+		    {
+		        var e = {}, i, k, v = [], r = '', w = String.fromCharCode;
+		        var n = [[65, 91], [97, 123], [48, 58], [43, 44], [47, 48]];
+
+		        for (z in n)
+		        {
+		            for (i = n[z][0]; i < n[z][1]; i++)
+		            {
+		                v.push(w(i));
+		            }
+		        }
+		        for (i = 0; i < 64; i++)
+		        {
+		            e[v[i]] = i;
+		        }
+
+		        for (i = 0; i < s.length; i+=72)
+		        {
+		            var b = 0, c, x, l = 0, o = s.substring(i, i+72);
+		            for (x = 0; x < o.length; x++)
+		            {
+		                c = e[o.charAt(x)];
+		                b = (b << 6) + c;
+		                l += 6;
+		                while (l >= 8)
+		                {
+		                    r += w((b >>> (l -= 8)) % 256);
+		                }
+		             }
+		        }
+		        return r;
+		    };
+	}]);
+  
+  </script>
+  
+</body>
+</html>
